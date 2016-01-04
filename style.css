@@ -1,0 +1,240 @@
+* {
+	box-sizing: border-box;
+}
+body, html {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+body {
+	font-family: Trebuchet MS;
+	font-size: 13px;
+
+	margin: 0px;
+	padding: 0px;
+
+	flex-direction: column;
+}
+body,
+#players,
+#fieldWrap,
+#field,
+.line {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+#players {
+	width: 100%;
+	padding: 5px 0px;
+	background-color: #39374A;
+	flex-shrink: 0;
+
+	justify-content: space-between;
+}
+
+.player {
+	height: 100px;
+	width: 20%;
+	margin: 0px 2%;
+	display: inline-block;
+	border-radius: 8px;
+	border: 1px solid;
+	padding: 5px;
+	overflow: hidden;
+	text-shadow: 1px 1px 2px white;
+}
+.player .name {
+	font-size: 30px;
+}
+.player .coins,
+.player .carpetsLeft,
+.player .overallPoints {
+	display: inline-block;
+	position: relative;
+	padding-left: 25px;
+	margin-top: 8px;
+}
+.player .coins:before,
+.player .carpetsLeft:before,
+.player .overallPoints:before {
+	content: '';
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	position: absolute;
+	left: 0px;
+	top: -2px;
+}
+.player .coins:before {
+	background-image: url(images/coin.png);
+}
+.player .carpetsLeft:before {
+	background-image: url(images/carpet.png);
+}
+.player .overallPoints {
+	padding-left: 40px;
+	display: block;
+}
+.player .overallPoints:before {
+	padding-top: 2px;
+	content: 'Очки';
+}
+.chosen {
+	box-shadow: 0px 0px 35px white;
+}
+
+#fieldWrap {
+	width: 100%;
+	flex-grow: 1;
+	justify-content: center;
+	align-items: center;
+
+	border: 1px solid grey;
+	background-image: url(images/field.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #7D7E8C;
+}
+
+#field {
+	flex-direction: column;
+	justify-content: center;
+	z-index: 0;
+	position: relative;
+}
+.line {
+	flex-grow: 1;
+}
+.cell {
+	flex: 1 0 auto;
+	position: relative;
+}
+.available:before {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	z-index: 1;
+}
+
+#osama {
+	position: absolute;
+	top: 5px;
+	bottom: 5px;
+	left: 5px;
+	right: 5px;
+	border-radius: 100%;
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+	z-index: 1;
+}
+#osama:after {
+	background-color: black;
+	background-image: url(images/osama.png);
+	background-position: center;
+	background-size: contain;
+	content: '';
+	display: block;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	border-radius: 100%;
+}
+#osama.dir-up:after {
+	transform: rotate(180deg);
+}
+#osama.dir-left:after {
+	transform: rotate(90deg);
+}
+#osama.dir-right:after {
+	transform: rotate(270deg);
+}
+div[class^=osamaDirections] {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	display: none;
+	background-image: url(images/arrow.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.osamaDirections-up {
+	top: -100%;
+	transform: rotate(180deg);
+}
+.osamaDirections-down {
+	bottom: -100%;
+}
+.osamaDirections-left {
+	left: -100%;
+	transform: rotate(90deg);
+}
+.osamaDirections-right {
+	right: -100%;
+	transform: rotate(270deg);
+}
+
+.carpet {
+	position: absolute;
+	top: 3px;
+	bottom: 3px;
+	left: 3px;
+	right: 3px;
+	box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.7);
+	border: 2px solid silver;
+}
+.carpet>div {
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.carpet.playerCarpet0>div {
+	background-image: url(images/player0carpet.png);
+}
+.carpet.playerCarpet1>div {
+	background-image: url(images/player1carpet.png);
+}
+.carpet.playerCarpet2>div {
+	background-image: url(images/player2carpet.png);
+}
+.carpet.playerCarpet3>div {
+	background-image: url(images/player3carpet.png);
+}
+.carpet-up {
+	bottom: 0px;
+	border-bottom: 0px;
+}
+.carpet-up>div {
+	transform: rotate(180deg);
+}
+.carpet-down {
+	top: 0px;
+	border-top: 0px;
+}
+.carpet-left {
+	right: 0px;
+	border-right: 0px;
+}
+.carpet-left>div {
+	transform: rotate(90deg) translateY(-2px);
+	background-position: 3px 0px;
+}
+.carpet-right {
+	left: 0px;
+	border-left: 0px;
+}
+.carpet-right>div {
+	transform: rotate(270deg) translateY(-4px);
+	background-position: 4px 0px;
+}
