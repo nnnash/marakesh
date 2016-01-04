@@ -1,4 +1,4 @@
-function Player(div, id, name) {
+function Player(div, id, name, carpets) {
 	var PLAYERS = [
 		{
 			color: '#F7E498'
@@ -16,7 +16,7 @@ function Player(div, id, name) {
 	this.id = id;
 	this.name = name;
 	this.coins = 30;
-	this.carpets = 2;
+	this.carpets = carpets;
 	this.layedCarpetPoints = 0;
 	this.div = div;
 	this.color = PLAYERS[id].color;

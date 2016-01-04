@@ -1,13 +1,14 @@
 function Game(properties) {
 	var players = [],
-		$playerDiv;
+		$playerDiv,
+        carpetsNum = properties.players.length === 4 ? 12 : 15;
 	for (var i = 0; i < properties.players.length; i++) {
 		$playerDiv = $('.player').first();
 		if (i > 0 ) {
 			$playerDiv = $playerDiv.clone();
 			$playerDiv.appendTo($('#players'));
 		}
-		players.push(new Player($playerDiv, i, properties.players[i]));
+		players.push(new Player($playerDiv, i, properties.players[i], carpetsNum));
 	}
 	this.players = players;
 	this.currentPlayer = -1;
