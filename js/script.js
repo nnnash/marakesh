@@ -4,17 +4,40 @@ var REVERSES = {
 	down: 'up',
 	left: 'right',
 	right: 'left'
-}
+};
 
 $(function(){
 	resize();
-	initGame();
-})
+});
 
 $( window ).resize(function() {
 	resize();
 }).keydown(function(e){
-	game.processKeyPressed(e);
+	!!game && game.processKeyPressed(e);
+});
+
+$('.startGameBtn').click(function () {
+    var $inputs = $('input:text').filter(function() { return this.value !== ""; });
+    var players = [];
+    for (var i = 0, len = $inputs.length; i < len; i++) {
+        var input = $inputs[i];
+        players.push(input.value);
+    }
+	if (!$(this).hasClass('disabled')) {
+        $('#gameStartDialog').fadeOut();
+        initGame(players);
+    }
+});
+$('.inputPlayer input').keyup(function () {
+	var $inputs = $('input:text').filter(function() { return this.value !== ""; });
+	if ($inputs.length > 1) {
+		$('.startGameBtn').removeClass('disabled');
+	} else {
+		$('.startGameBtn').addClass('disabled');
+	}
+});
+$('.okBtn').click(function () {
+    $(this).closest('.gameWinner').fadeOut();
 });
 
 function resize(){
@@ -29,9 +52,10 @@ function resize(){
 	}
 }
 
-function initGame(){
+function initGame(players){
+    !!game && game.destroy();
 	game = new Game({
-		playerNumber: 4
+		players: players
 	});
 	game.start();
 }

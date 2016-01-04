@@ -1,26 +1,22 @@
-function Player(div, id) {
+function Player(div, id, name) {
 	var PLAYERS = [
 		{
-			name: 'You',
 			color: '#F7E498'
 		},
 		{
-			name: 'Akhmed',
 			color: '#8C1D30'
 		},
 		{
-			name: 'Rashid',
-			color: '#D47243'
+			color: '#0369B3'
 		},
 		{
-			name: 'Mukhamed',
-			color: '#0369B3'
+			color: '#D47243'
 		}
 	];
 	this.id = id;
-	this.name = PLAYERS[id].name;
+	this.name = name;
 	this.coins = 30;
-	this.carpets = 12;
+	this.carpets = 2;
 	this.layedCarpetPoints = 0;
 	this.div = div;
 	this.color = PLAYERS[id].color;

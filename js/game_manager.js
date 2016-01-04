@@ -1,16 +1,24 @@
 function Game(properties) {
-	var players = [];
-	for (var i = 0; i < properties.playerNumber; i++) {
-		players.push(new Player($('.player:nth-child(' + (i + 1) + ')'), i));
-		$('.player:nth-child(' + (i + 1) + ')');
+	var players = [],
+		$playerDiv;
+	for (var i = 0; i < properties.players.length; i++) {
+		$playerDiv = $('.player').first();
+		if (i > 0 ) {
+			$playerDiv = $playerDiv.clone();
+			$playerDiv.appendTo($('#players'));
+		}
+		players.push(new Player($playerDiv, i, properties.players[i]));
 	}
 	this.players = players;
 	this.currentPlayer = -1;
 	this.field = new Field();
-	// this.osama = new Osama($('.line:nth-child(4)>.cell:nth-child(4)'));
 	this.actionManager = new ActionEvents();
 	this.actionManager.listenToOsama(this.field.osama);
 }
+Game.prototype.destroy = function(e) {
+    $('.carpet, #osama').remove();
+    $('.player:not(:first-child)').remove();
+};
 Game.prototype.processKeyPressed = function(e) {
 	this.actionManager.keyPressed(e);
 };
@@ -22,16 +30,24 @@ Game.prototype.start = function(){
 	// перемещение
 	// оплата штрафа
 	// выкладка ковра
-}
+};
 Game.prototype.changePlayer = function() {
 	if (this.currentPlayer === this.players.length - 1) this.currentPlayer = -1;
 	this.currentPlayer++;
 	if (!this.players[this.currentPlayer].choose()) {
-		var winner = this.players[0];
+		var winner = this.players[0],
+            isDraw = false;
 		for (var i = 1; i < this.players.length; i++) {
-			if (this.players[i].getOverallPoints() > winner.getOverallPoints()) winner = this.players[i];
-		};
-		alert ('победил ' + winner.name);
+            var winnerPoints = winner.getOverallPoints(),
+                thisPlayerPoints = this.players[i].getOverallPoints();
+			if (thisPlayerPoints > winnerPoints) {
+                winner = this.players[i];
+                isDraw = false
+            } else if (thisPlayerPoints === winnerPoints) {
+                isDraw = true;
+            }
+		}
+		this.endGame(winner, isDraw);
 		return;
 	}
 	this.nextStep(this.chooseDirection);
@@ -107,4 +123,18 @@ Game.prototype.nextStep = function(func, args) {
 	setTimeout( function() {
 		func.apply(self, args);
 	});
-}
+};
+Game.prototype.endGame = function(winner, isDraw) {
+    var $dlg = $('#gameStartDialog'),
+        $won = $dlg.find('.gameWinner');
+    if (!isDraw) {
+        $won.find('span').text(winner.name);
+        $won.css('background', winner.color);
+    } else {
+        $won.find('span').text('Ничья!');
+        $won.css('background', '#5E5EC0');
+    }
+    $dlg.fadeIn(function() {
+        $won.slideDown();
+    });
+};
